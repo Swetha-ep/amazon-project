@@ -42,7 +42,7 @@ products.forEach((product)=>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -53,6 +53,10 @@ products.forEach((product)=>{
         </div>
     `;
 });
+// The reason we use an object is because each product
+// will have its own timeoutId. So an object lets us
+// save multiple timeout ids for different products.
+const addedMessageTimeouts = {};
 
 document.querySelector('.js-products-grid').innerHTML = productsHtml;
 // adding a data attribute to the delete button; data attribute should start with data- in kebab case eg:(data-product-name)
@@ -60,7 +64,8 @@ document.querySelector('.js-products-grid').innerHTML = productsHtml;
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button)=>{
     button.addEventListener('click',()=>{
-        const productId = button.dataset.productId;
+        // const productId = button.dataset.productId;
+        const {productId} = button.dataset; //destructuring
 
         const quantitySelector = document.querySelector(
           `.js-quantity-selector-${productId}`);
@@ -80,8 +85,10 @@ document.querySelectorAll('.js-add-to-cart')
         }
         else{
             cart.push({
-                productId : productId,
-                quantity : quantity
+                // productId : productId,
+                // quantity : quantity
+                productId,  //destructuring
+                quantity
             });
         } 
 
@@ -91,6 +98,22 @@ document.querySelectorAll('.js-add-to-cart')
         });
         document.querySelector('.js-cart-quantity').innerHTML = cartQuantity; 
         console.log(cart);
+
+        const addedMessage = document.querySelector(
+          `.js-added-to-cart-${productId}`
+        );
+        addedMessage.classList.add('added-to-cart-visible');
+        
+        const previousTimeoutId = addedMessageTimeouts[productId];
+        if(previousTimeoutId){
+          clearTimeout(previousTimeoutId);
+        }
+
+        const timeoutId = setTimeout(()=>{
+          addedMessage.classList.remove('added-to-cart-visible');
+        },2000);
+
+        addedMessageTimeouts[productId] = timeoutId;
         
     });
 });
