@@ -1,3 +1,6 @@
+import {addToCart, cart} from '../data/cart.js'
+import { products } from '../data/products.js';
+
 let productsHtml = '';
 
 products.forEach((product)=>{
@@ -59,45 +62,18 @@ products.forEach((product)=>{
 const addedMessageTimeouts = {};
 
 document.querySelector('.js-products-grid').innerHTML = productsHtml;
-// adding a data attribute to the delete button; data attribute should start with data- in kebab case eg:(data-product-name)
-//while accessing use camel case eg:(productName)
+// adding a data attribute to the add button; data attribute should start with data- in kebab case eg:(data-product-id)
+//while accessing use camel case eg:(productId)
+
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button)=>{
     button.addEventListener('click',()=>{
         // const productId = button.dataset.productId;
         const {productId} = button.dataset; //destructuring
 
-        const quantitySelector = document.querySelector(
-          `.js-quantity-selector-${productId}`);
-        
-        const quantity = Number(quantitySelector.value);
-        
-        let matchingItem;
+        addToCart(productId);
 
-        cart.forEach((item)=>{
-            if(productId === item.productId){
-                matchingItem = item;
-            }
-        });
-
-        if(matchingItem){
-            matchingItem.quantity += quantity;
-        }
-        else{
-            cart.push({
-                // productId : productId,
-                // quantity : quantity
-                productId,  //destructuring
-                quantity
-            });
-        } 
-
-        let cartQuantity = 0;
-        cart.forEach((item)=>{
-            cartQuantity += item.quantity;
-        });
-        document.querySelector('.js-cart-quantity').innerHTML = cartQuantity; 
-        console.log(cart);
+        updateCartQuantity();
 
         const addedMessage = document.querySelector(
           `.js-added-to-cart-${productId}`
@@ -117,3 +93,13 @@ document.querySelectorAll('.js-add-to-cart')
         
     });
 });
+
+
+function updateCartQuantity(){
+    let cartQuantity = 0;
+    cart.forEach((item)=>{
+        cartQuantity += item.quantity;
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity; 
+    console.log(cart);
+};
