@@ -1,5 +1,6 @@
-import {addToCart, cart} from '../data/cart.js'
+import {addToCart, cart, calculateCartQuantity} from '../data/cart.js'
 import { products } from '../data/products.js';
+import {priceConvert} from './utils/price.js'
 
 let productsHtml = '';
 
@@ -61,6 +62,8 @@ products.forEach((product)=>{
 // save multiple timeout ids for different products.
 const addedMessageTimeouts = {};
 
+updateCartQuantity();
+
 document.querySelector('.js-products-grid').innerHTML = productsHtml;
 // adding a data attribute to the add button; data attribute should start with data- in kebab case eg:(data-product-id)
 //while accessing use camel case eg:(productId)
@@ -96,10 +99,8 @@ document.querySelectorAll('.js-add-to-cart')
 
 
 function updateCartQuantity(){
-    let cartQuantity = 0;
-    cart.forEach((item)=>{
-        cartQuantity += item.quantity;
-    });
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity; 
+    const cartQuantity = calculateCartQuantity();
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity || '';
     console.log(cart);
 };
+
