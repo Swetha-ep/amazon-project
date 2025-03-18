@@ -1,4 +1,4 @@
-import {priceConvert} from '../scripts/utils/price.js';
+import {priceConvert} from '../../scripts/utils/price.js';
 
 //unit testing - only testing a single function
 
