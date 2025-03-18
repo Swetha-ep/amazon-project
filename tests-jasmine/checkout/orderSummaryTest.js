@@ -59,11 +59,11 @@ describe('test suite : renderOrderSummary',()=>{
             document.querySelectorAll('.js-cart-item-container').length
         ).toEqual(1);
         expect(
-            document.querySelector(`.js-cart-item-conatiner-${productId1}`)
+            document.querySelector(`.js-cart-item-container-${productId1}`)
         ).toEqual(null);
-        // expect(
-        //     document.querySelector(`.js-cart-item-conatiner-${productId2}`)
-        // ).not.toEqual(null);
+        expect(
+            document.querySelector(`.js-cart-item-container-${productId2}`)
+        ).not.toEqual(null);
         expect(cart.length).toEqual(1);
         expect(cart[0].productId).toEqual(productId2);
 
