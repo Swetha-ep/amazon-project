@@ -1,5 +1,6 @@
 import {addToCart,cart,loadFromStorage} from '../../data/cart.js';
 
+// unit test - testing only a piece of code
 // test coverage - testing each and every if cases and maximizing the test coverage
 // flaky test -  a test that sometimes fails and sometimes passes even if we didnt change the code
 // mocks - lets us replace a method with a fake version
