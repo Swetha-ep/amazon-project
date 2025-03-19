@@ -6,10 +6,11 @@ import {addToCart,cart,loadFromStorage} from '../../data/cart.js';
 // mocks - lets us replace a method with a fake version
 
 describe('test suite: addToCart', ()=>{
+    beforeEach(()=>{
+        spyOn(localStorage,'setItem');
+    });
     // works if i have added the quantity along with it
     it('adds an existing product to the cart',()=>{
-        spyOn(localStorage, 'setItem');
-
         spyOn(localStorage, 'getItem').and.callFake(()=>{
             return JSON.stringify([{
                 productId : '43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -19,16 +20,19 @@ describe('test suite: addToCart', ()=>{
         });
         loadFromStorage();
 
-        addToCart('43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart.length).toEqual(1);
         expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-        expect(cart[0].productId).toEqual('43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
+            productId : 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+            quantity : 2,
+            deliveryOptionId : '1'
+        }]));
+        expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart[0].quantity).toEqual(2);
     });
 
     it('adds a new product to the cart',()=>{
-        spyOn(localStorage,'setItem');
-
         // spyon(obj we want to mock, method we want to mock)
         spyOn(localStorage, 'getItem').and.callFake(()=>{
             return JSON.stringify([]);
@@ -36,9 +40,14 @@ describe('test suite: addToCart', ()=>{
         loadFromStorage();
         
         // works if i have added the quantity along with it
-        addToCart('43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart.length).toEqual(1);
         expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
+            productId : 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+            quantity : 2,
+            deliveryOptionId : '1'
+        }]));
         expect(cart[0].productId).toEqual('43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart[0].quantity).toEqual(1);
     });
