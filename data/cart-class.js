@@ -122,3 +122,37 @@ console.log(bussinessCart);
 console.log(bussinessCart instanceof Cart);
 
 
+// this
+//outside a method - this becomes undefined
+console.log(this);
+// output - undefined
+
+const object2 = {
+    a:2,
+    b:this.a
+};
+// at this point object2 hasnt been craeted yet. so using this will give errror
+// inside a regular function this becomes undefined
+function logThis(){
+    console.log(this);
+}
+logThis();
+// gives undefined
+logThis.call('hello');
+// the first value we give inside a call will be the value of this.
+
+// arrow functions dont change the value of this
+const object3 ={
+    method: ()=>{
+        console.log(this);
+        // here this will have the same value which it has outside the function which is undefined
+    }
+};
+object3.method();
+
+const object4 = {
+    method(){
+        console.log(this);
+        // inside a method this points to outer object
+    }
+}
