@@ -43,6 +43,8 @@ products.forEach((product)=>{
               <option value="10">10</option>
             </select>
           </div>
+          
+          ${product.extraInfoHtml()}
 
           <div class="product-spacer"></div>
 
@@ -57,6 +59,10 @@ products.forEach((product)=>{
         </div>
     `;
 });
+
+// product.extraInfoHtml(); is an example for polymorphism beacuse we dont know which class its coming from by looking at it (eg it caqn be from Clothing or Product class)
+// polymorphism means using a method without knowing the class; lets say its an alternative for if statements.
+
 // The reason we use an object is because each product
 // will have its own timeoutId. So an object lets us
 // save multiple timeout ids for different products.

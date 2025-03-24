@@ -22,24 +22,35 @@ class Product {
   getPrice(){
     return `${priceConvert(this.priceCents)}`
   }
+
+  extraInfoHtml(){
+    return '';
+  }
+
 }
 
-const product1 = new Product({
-  id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-  image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-  name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-  rating: {
-    stars: 4.5,
-    count: 87
-  },
-  priceCents: 1090,
-  keywords: [
-    "socks",
-    "sports",
-    "apparel"
-  ]
-});
-console.log(product1);
+
+class Clothing extends Product{
+  sizeChartLink;
+
+  constructor(productDetails){
+    // if we dont have constructor in this class, it will run the parent's constructor by default
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  // method overriding
+  extraInfoHtml(){
+    // super.extraInfoHtml(); calls the parent's method
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size chart
+      </a>
+    `;
+  }
+
+}
+
 
 export const products = [
   {
@@ -721,11 +732,12 @@ export const products = [
     priceCents: 2999
   }
 ].map((productDetails)=>{
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails);
 });
 // converted all of the products from regular objects into this Product class
-
-console.log(products);
 
 
 export function getproductId(productId){
