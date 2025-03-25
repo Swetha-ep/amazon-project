@@ -24,7 +24,7 @@ export function getDeliveryOption(deliveryOptionId){
     return deliveryOption || deliveryOption[0];
 }
 
-export function validDeliveryOption(deliveryOptionId){
+export function  validDeliveryOption(deliveryOptionId){
     let found = false;
 
     deliveryOptions.forEach((option)=>{
