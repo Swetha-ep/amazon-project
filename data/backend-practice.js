@@ -8,6 +8,7 @@ xhr.addEventListener('load',()=>{
 
 xhr.open('GET','https://supersimplebackend.dev');
 xhr.send();
+// send is asynchronous. it doesnt wait for response to come back
 // the response will be seen in the network tab in inspect
 
 const xhr1 = new XMLHttpRequest();
