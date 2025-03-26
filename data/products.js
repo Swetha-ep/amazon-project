@@ -77,6 +77,44 @@ export class Appliance extends Product{
 
 export let products = [];
 
+// fetch - better way to make http requests because it uses promisse directly
+export function loadProductsFetch(){
+  // by default fetch makes a get request
+  // fetch uses a promise
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response)=>{
+    return response.json();
+    // response.json is also asynch and it gives a promise
+    // after the promsie it will give us the data that is atatched to response and is saved inside thens parameter
+  }).then((productsData)=>{
+    // it automatically parsed the json data for us
+    products = productsData.map((productDetails)=>{
+      if(productDetails.type === 'clothing')
+        {
+        return new Clothing(productDetails);
+      } 
+      else if(productDetails.type === 'appliance')
+        {
+        return new Appliance(productDetails);
+      }
+      return new Product(productDetails);
+    });
+    console.log('load products');
+  });
+
+  return promise;
+
+}
+
+//  as loadproductsfetch returns us a promise we can use then for next step
+/*
+loadProductsFetch().then(()=>{
+  console.log('next step');
+  
+});
+*/
+
 // callback function - we are giving a function to run in future
 export function loadProducts(fun){
   const xhr = new XMLHttpRequest();

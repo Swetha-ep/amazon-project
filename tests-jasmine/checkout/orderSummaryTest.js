@@ -1,6 +1,6 @@
 import {renderOrderSummary} from '../../scripts/checkout/orderSummary.js';
 import {loadFromStorage,cart} from '../../data/cart.js';
-import { loadProducts } from '../../data/products.js';
+import { loadProducts,loadProductsFetch } from '../../data/products.js';
 
 // integrated tests - tests many units/pieces of code working together
 // hooks - share code between 2 tests
@@ -14,7 +14,7 @@ describe('test suite : renderOrderSummary',()=>{
     beforeAll((done)=>{
         // due to loadproducts is asynchronous, we can use jasmine's done parameter to wait for response
         // done lets us control when to go to next step
-        loadProducts(()=>{
+        loadProductsFetch().then(()=>{
             done();
         });
     });
