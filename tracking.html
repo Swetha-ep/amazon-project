@@ -88,5 +88,15 @@
         </div>
       </div>
     </div>
+
+
+    <script>
+      // this url class analyses the object we give it and breaks down it into different parts
+      //  one of the parts is the url parameters.
+      const url = new URL(window.location.href);
+      // url parameteres are also called search parameters
+      // we can save multiple parameters in url by using - /tracking.html/?orderid=123&productid=456
+      url.searchParams.get('orderId');
+    </script>
   </body>
 </html>
