@@ -11,19 +11,36 @@ import { loadCart } from "../data/cart.js";
 // async makes a function return a promise - basically wraps a code in promise
 // async await can only be used with promises and nothing to do with callback
 async function loadPage(){
- 
-    // can only use await when inside an async function
-    await loadProductsFetch();
-    // await lets us write asynchronus code like normal code
-    // usually we use then to wait for the response and do next step. now we can use await
+// we can use try catch in normal functions also
+// used to handle unexpected errors
+    try {
+        // we can give errors manually using throw
+        // throw 'error 1';
+        // so this will make the code skip and go staright to catch and the error parameter contains error 1
 
-    const value = await new Promise((resolve)=>{
-        loadCart(()=>{
-            resolve('value 3');
-            // while using await we dont need thens parameter to access this value
-            // instead it gets returned and can be saved.
+        // can only use await when inside an async function
+        await loadProductsFetch();
+        // await lets us write asynchronus code like normal code
+        // usually we use then to wait for the response and do next step. now we can use await
+
+        const value = await new Promise((resolve, reject)=>{
+            // we can manually create errors in promises by 2 ways
+            // can use eg :throw 'error2' and it goes to catch not .catch beacuse await make code as a synch/normal code
+
+            loadCart(()=>{
+                // this is a func which works in future. throw cannot work in future
+                // so use second parameter given by promise -reject
+                // reject('error 3');
+                resolve('value 3');
+                // while using await we dont need thens parameter to access this value
+                // instead it gets returned and can be saved.
+            });
         });
-    });
+
+    } catch (error) {
+        console.log('unexpected errror. Please try again later');
+    }
+ 
     // the closest function near await should be async not a normal one
     renderCheckoutHeader();
     renderOrderSummary();

@@ -101,10 +101,12 @@ export function loadProductsFetch(){
       return new Product(productDetails);
     });
     console.log('load products');
+    // error handling in fetch
+  }).catch((error)=>{
+    console.log('unexpected errror. Please try again later');
   });
 
   return promise;
-
 }
 
 //  as loadproductsfetch returns us a promise we can use then for next step
@@ -134,6 +136,11 @@ export function loadProducts(fun){
     });
     console.log('load products');
     fun();
+  });
+  // if error in using callbacks, should setup a seperate callback just for errors.
+  // error handling
+  xhr.addEventListener('error',(error)=>{
+    console.log('unexpected errror. Please try again later');
   });
 
   xhr.open('GET', 'https://supersimplebackend.dev/products');
