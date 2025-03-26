@@ -7,6 +7,33 @@ import { loadCart } from "../data/cart.js";
 // import '../data/car.js';
 // import '../data/backend-practice.js';
 
+// async await
+// async makes a function return a promise - basically wraps a code in promise
+// async await can only be used with promises and nothing to do with callback
+async function loadPage(){
+ 
+    // can only use await when inside an async function
+    await loadProductsFetch();
+    // await lets us write asynchronus code like normal code
+    // usually we use then to wait for the response and do next step. now we can use await
+
+    const value = await new Promise((resolve)=>{
+        loadCart(()=>{
+            resolve('value 3');
+            // while using await we dont need thens parameter to access this value
+            // instead it gets returned and can be saved.
+        });
+    });
+    // the closest function near await should be async not a normal one
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+
+    // this gets converted into resolve('value 2')  
+}
+loadPage();
+
+
 // promise is a built-in class 
 // and when we create a promise, we need to create a function
 // so when we create a function, it will run the inner function immediately
@@ -27,6 +54,7 @@ new Promise((resolve)=>{
 
 // we can give array of promises to promise.all()
 // promise.all() waits for all of the promises to finish before going to next step
+/*
 Promise.all([
     loadProductsFetch(),
     new Promise((resolve)=>{
@@ -42,6 +70,7 @@ Promise.all([
     renderOrderSummary();
     renderPaymentSummary();
 });
+*/
 
 // promises avoid too much nesting
 // thats why its recommended to use promises instead of callbacks
