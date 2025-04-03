@@ -11,12 +11,16 @@ describe('test suite : renderOrderSummary',()=>{
 
     //types of hooks - beforeEach(),afterEach(),beforeAll(),afterAll()
 
-    beforeAll((done)=>{
+    // beforeAll((done)=>{
         // due to loadproducts is asynchronous, we can use jasmine's done parameter to wait for response
         // done lets us control when to go to next step
-        loadProductsFetch().then(()=>{
-            done();
-        });
+    //     loadProductsFetch().then(()=>{
+    //         done();
+    //     });
+    // });
+
+    beforeAll(async ()=>{
+        await loadProductsFetch();
     });
 
     beforeEach(()=>{
